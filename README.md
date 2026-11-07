@@ -97,7 +97,7 @@ API derlemesi: proje kökünde `dotnet build UpdateApi`. Angular derlemesi: `cli
 
 İzole veri klasörü için `STORESYNC_DATA`, izole API adresi için `--urls` ve `--Demo:SourceBaseUrl` kullanılabilir. `Demo:SourceBaseUrl`, demo içindeki HTTP dosya kaynağının adresidir; ayrıca uzaktaki dosya kataloğunu otomatik keşfeden bir özellik değildir.
 
-## Görüşmede doğru anlatım
+## Demo kapsamı
 
 Bu sürüm, aynı bilgisayardaki iki klasörle İstanbul/Ukrayna sunucularını canlandırır. HTTP ve Range gerçekten kullanılır; gerçek WAN/ülkeler arası bağlantı testi değildir. Dosyalar tarayıcının bilgisayarına değil **API'nin çalıştığı bilgisayardaki** Ukrayna klasörüne yazılır. API'nin tümden kapanması sırasında aktarım durur; yeniden başlatıldığında devam eder.
 
