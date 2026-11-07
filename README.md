@@ -12,6 +12,20 @@ Gereksinimler: .NET SDK 10, Node.js 22.12 veya uyumlu üst sürüm, npm. İlk ba
 
 Visual Studio yerine proje kökünden `dotnet run --project UpdateApi` kullanılabilir. Aynı API'yi iki kez başlatmayın; 5080 portunu ve demo verisini tek süreç kullanmalıdır.
 
+## Render'da ücretsiz yayın
+
+[Render'da yayınla](https://render.com/deploy?repo=https://github.com/mehmethanedar/StoreSync)
+
+1. Render hesabınıza giriş yapın ve yukarıdaki bağlantıyı açın.
+2. Blueprint için bir ad yazın. Servis planının **Free** olduğunu kontrol edin ve **Deploy Blueprint** düğmesine basın.
+3. İlk derleme bitince Render'ın verdiği `https://...onrender.com` adresini açın. Ana sayfa `/home`, Swagger `/swagger` yolundadır.
+
+`render.yaml` tek bir ücretsiz web servisi tanımlar. Dockerfile, Angular'ı derler, .NET API'yi yayınlar ve arayüz dosyalarını API'nin `wwwroot` klasörüne koyar. Böylece arayüz ve API aynı adresten çalışır. Kaynak kodunda yine yalnızca `UpdateApi` ve `client` projeleri vardır.
+
+Render'da uygulama 10000 portunda çalışır; dosya aktarımları aynı servisin yerel HTTP adresini kullanır. Bilgisayarınızın açık kalması gerekmez. Demo dosyaları yayın paketine dahil edilmez; servis ilk açıldığında oluşturulur. Tüm ziyaretçiler aynı demo klasörlerini ve aktarım durumunu kullanır.
+
+Free planda 15 dakika ziyaret olmazsa servis uyur. İlk açılışta yaklaşık bir dakika beklenebilir. Uyuma, yeniden başlatma veya yeni yayın sırasında demo dosyaları ve kayıtlı ilerleme silinir; uygulama başlangıç senaryosunu yeniden oluşturur. Ekrandaki Duraklat/Devam et işlemleri servis çalıştığı sürece kullanılabilir. Sunucu yeniden başlatıldıktan sonra da ilerlemeyi korumak için kalıcı diskli bir plan gerekir. [Render Free planının sınırları](https://render.com/docs/free).
+
 ## Demo klasörleri
 
 İlk API açılışında aşağıdaki gerçek klasörler oluşturulur:
@@ -93,7 +107,7 @@ Akış: **Angular → Controller → TransferService → HTTP kaynak dosyası �
 
 ## Derleme ve ayarlar
 
-API derlemesi: proje kökünde `dotnet build UpdateApi`. Angular derlemesi: `client` klasöründe `npm run build`. Web geliştirme sunucusu `/api` isteklerini 5080'e iletir. Production web yayını için aynı reverse proxy eşlemesi gerekir.
+API derlemesi: proje kökünde `dotnet build UpdateApi`. Angular derlemesi: `client` klasöründe `npm run build`. Yerel web geliştirme sunucusu `/api` isteklerini 5080'e iletir. Render yayınında Angular dosyaları doğrudan API'den sunulur.
 
 İzole veri klasörü için `STORESYNC_DATA`, izole API adresi için `--urls` ve `--Demo:SourceBaseUrl` kullanılabilir. `Demo:SourceBaseUrl`, demo içindeki HTTP dosya kaynağının adresidir; ayrıca uzaktaki dosya kataloğunu otomatik keşfeden bir özellik değildir.
 

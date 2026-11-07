@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: storesync-demo
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/transfers/status

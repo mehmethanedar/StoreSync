@@ -27,13 +27,15 @@ namespace StoreSync.UpdateApi
             folderService.Initialize();
 
             app.UseExceptionHandler(ConfigureErrorHandler);
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+            // Yayında Angular dosyaları wwwroot klasöründen sunulur.
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.MapControllers();
+            app.MapFallbackToFile("home/{*path:nonfile}", "index.html");
             app.Run();
         }
 
