@@ -1,0 +1,41 @@
+<main>
+  <div class="intro">
+    <div><small>KLASÖR AKTARIM DEMOSU</small><h1>İstanbul'dan Ukrayna'ya.</h1></div>
+    <span class="phase">{{ status.phase }}</span>
+  </div>
+
+  <div class="locations">
+    <section class="location"><span class="tag">KAYNAK</span><h2>İstanbul Sunucusu</h2><p>IstanbulSunucu</p><strong>{{ status.sourceFileCount }} <span>dosya</span></strong></section>
+    <div class="direction" aria-hidden="true">→</div>
+    <section class="location destination"><span class="tag">HEDEF</span><h2>Ukrayna Mağazası</h2><p>UkraynaMagaza</p><strong>{{ status.destinationFileCount }} <span>dosya</span></strong></section>
+  </div>
+
+  <section class="transfer-panel">
+    <div class="counts">
+      <div><span>Aynı · atlanacak</span><strong>{{ status.skippedFiles }}</strong></div>
+      <div><span>Aktarılacak</span><strong>{{ status.plannedFiles }}</strong></div>
+      <div><span>Tamamlanan</span><strong class="green">{{ status.completedFiles }}</strong></div>
+      <div><span>Kalan</span><strong>{{ status.remainingFiles }}</strong></div>
+    </div>
+    <app-progress-bar [value]="status.transferredBytes" [total]="status.totalBytes"></app-progress-bar>
+    <p class="byte-progress">{{ status.transferredBytes / 1048576 | number:'1.1-1' }} / {{ status.totalBytes / 1048576 | number:'1.1-1' }} MB <span>· SHA-256 ile doğrulanır</span></p>
+
+    <div class="toolbar">
+      <button type="button" [disabled]="!isConnected || isCommandPending || isRunning" (click)="executeCommand('analyze')">1. Dosyaları analiz et</button>
+      <button class="primary" type="button" [disabled]="!isConnected || isCommandPending || isRunning" (click)="start()">2. Sistemi aktar / Devam et</button>
+      <button type="button" [disabled]="!isConnected || isCommandPending || !isRunning" (click)="executeCommand('pause')">Duraklat</button>
+      <button type="button" [disabled]="!isConnected || isCommandPending || isRunning" (click)="executeCommand('reset')">Demoyu sıfırla</button>
+      <label class="speed">Aktarım hızı<select [value]="isSlow" (change)="changeSpeed($event)" [disabled]="!isConnected || isCommandPending"><option value="false">Hızlı</option><option value="true">Yavaş</option></select></label>
+    </div>
+    <p class="notice" *ngIf="status.files.length === 0">İlk senaryo: 100 kaynak dosya; hedefte 60 aynı, 10 farklı ve 30 eksik dosya. Analizle başlayın.</p>
+    <p class="error" role="alert" *ngIf="status.error">{{ status.error }}</p>
+    <p class="error" role="alert" *ngIf="connectionError">{{ connectionError }}</p>
+    <p class="error" role="alert" *ngIf="actionError">{{ actionError }}</p>
+  </section>
+
+  <section class="files-panel" *ngIf="status.files.length">
+    <div class="table-heading"><h2>Dosya karşılaştırması <span>{{ status.files.length }} dosya</span></h2><select aria-label="Dosyaları filtrele" [value]="filter" (change)="changeFilter($event)"><option value="all">Tüm dosyalar</option><option value="same">Aynı olanlar</option><option value="pending">Aktarım bekleyenler</option><option value="completed">Tamamlananlar</option></select></div>
+    <div class="table-scroll"><table><thead><tr><th>Dosya</th><th>Boyut</th><th>Karar</th><th>Durum</th><th>İlerleme</th></tr></thead><tbody><tr *ngFor="let file of visibleFiles"><td>{{ file.name }}</td><td>{{ file.size / 1048576 | number:'1.1-1' }} MB</td><td><span class="badge" [class.same]="file.action === 'Atla'">{{ file.action === 'Atla' ? 'Aynı, atla' : file.action }}</span></td><td>{{ file.phase }}</td><td>{{ file.action === 'Atla' ? '—' : ((file.bytes / file.size * 100 | number:'1.0-0') + '%') }}</td></tr></tbody></table></div>
+  </section>
+
+</main>

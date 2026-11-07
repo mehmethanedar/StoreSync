@@ -1,0 +1,43 @@
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 25px 40px;
+  color: #fff;
+  background: #14243b;
+
+  .brand {
+    color: inherit;
+    font-size: 25px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  span {
+    letter-spacing: 2px;
+    font-size: 13px;
+  }
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 48px auto;
+  padding: 0 28px;
+}
+
+footer {
+  padding-bottom: 24px;
+  color: #637087;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 20px;
+
+    span { display: none; }
+  }
+
+  .page-container { margin: 28px auto; padding: 0 16px; }
+}

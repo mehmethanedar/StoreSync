@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "projects": {
+    "storesync": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "index": "src/index.html",
+            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist",
+            "baseHref": "/",
+            "polyfills": [
+              "zone.js"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "inlineStyleLanguage": "scss"
+          },
+          "defaultConfiguration": "production",
+          "configurations": {
+            "production": {
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1MB",
+                  "maximumError": "1.5MB"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.conf.json",
+            "port": 4200
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "storesync:build:development"
+            },
+            "production": {
+              "buildTarget": "storesync:build:production"
+            }
+          }
+        }
+      },
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "standalone": false,
+          "type": "component"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "ff73cd33-c3d1-4ed6-9bad-b4fd9b4dd1cd"
+  },
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "newProjectRoot": "projects"
+}
