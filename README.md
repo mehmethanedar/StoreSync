@@ -2,6 +2,8 @@
 
 İki proje vardır: **UpdateApi** (.NET) ve **client** (Angular). Ayrı agent veya Electron uygulaması gerekmez.
 
+Canlı demo: [StoreSync](https://storesync-demo.onrender.com/home) · [Swagger](https://storesync-demo.onrender.com/swagger).
+
 ## Çalıştırma
 
 Gereksinimler: .NET SDK 10, Node.js 22.12 veya uyumlu üst sürüm, npm. İlk bağımlılık kurulumu için internet gerekir.
